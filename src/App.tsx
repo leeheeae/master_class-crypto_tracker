@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { HelmetProvider } from "react-helmet-async";
 
 // routes
 import Router from "./Router";
@@ -73,7 +74,9 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Router />
+      <HelmetProvider>
+        <Router />
+      </HelmetProvider>
       <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
