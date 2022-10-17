@@ -1,4 +1,7 @@
 import { createGlobalStyle } from "styled-components";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+// routes
 import Router from "./Router";
 
 const GlobalStyle = createGlobalStyle`
@@ -55,14 +58,14 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.textColor};
     line-height: 1.2;
   }
   a {
     text-decoration:none;
-    color:${(props) => props.theme.textColor};
+    color: #000;
   }
 `;
 
@@ -71,6 +74,7 @@ function App() {
     <>
       <GlobalStyle />
       <Router />
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }

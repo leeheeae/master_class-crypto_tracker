@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -65,6 +67,12 @@ interface ICoin {
 }
 
 function Coins() {
+  /* react query는 데이터를 캐싱해줌  */
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+
+  /*
+  ** 이전 방식 **
+
   const [coins, setCoins] = useState<ICoin[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -76,17 +84,18 @@ function Coins() {
       setLoading(false);
     })();
   }, []);
+  */
 
   return (
     <Container>
       <Header>
         <Title>coins</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>"loading..."</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={{ name: coin.name }}>
                 <Img
