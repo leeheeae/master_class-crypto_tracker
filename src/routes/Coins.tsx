@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { fetchCoins } from "../api";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../\batoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -70,6 +72,10 @@ function Coins() {
   /* react query는 데이터를 캐싱해줌  */
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
+  /*  atom의 value를 설정 (setState와 같음) */
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+
   /*
   ** 이전 방식 **
 
@@ -93,6 +99,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>coins</Title>
+        <button onClick={toggleDarkAtom}>Toggle mode</button>
       </Header>
       {isLoading ? (
         <Loader>"loading..."</Loader>
